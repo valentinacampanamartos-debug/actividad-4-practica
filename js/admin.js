@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = document.getElementById('password').value;
 
         // Aquí definimos el usuario y contraseña del grupo
-        if (usuario === 'grupo5' && password === '1234') { // Cambia estos valores por los reales de tu grupo
+        if (usuario === 'veinticinco' && password === 'cinco_555') { 
             loginSection.style.display = 'none';   // Oculta el login
             adminSection.style.display = 'block';  // Muestra el panel
             cargarInscriptos();                    // Trae los datos para la tabla
