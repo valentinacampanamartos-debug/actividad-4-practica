@@ -18,44 +18,51 @@
             
             <div class="grupo-input">
                 <label for="apellido">Apellido *</label>
-                <!-- Todos los campos llevan 'required' porque los datos son obligatorios[cite: 1] -->
-                <input type="text" id="apellido" name="apellido" required>
+                <input type="text" id="apellido" name="apellido">
+                <small class="error-texto"></small>
             </div>
 
             <div class="grupo-input">
                 <label for="nombre">Nombre *</label>
-                <input type="text" id="nombre" name="nombre" required>
+                <input type="text" id="nombre" name="nombre">
+                <small class="error-texto"></small>
             </div>
 
             <div class="grupo-input">
                 <label for="documento">Documento (8 dígitos) *</label>
-                <input type="number" id="documento" name="documento" required>
+                <input type="number" id="documento" name="documento">
+                <small class="error-texto"></small>
             </div>
 
             <div class="grupo-input">
                 <label for="email">Email *</label>
-                <input type="email" id="email" name="email" required>
+                <input type="email" id="email" name="email">
+                <small class="error-texto"></small>
             </div>
 
             <div class="grupo-input">
                 <label for="celular">Celular *</label>
-                <input type="number" id="celular" name="celular" required>
+                <input type="number" id="celular" name="celular">
+                <small class="error-texto"></small>
             </div>
 
             <div class="grupo-input">
                 <label for="empresa">Empresa a la que representa *</label>
-                <input type="text" id="empresa" name="empresa" required>
+                <input type="text" id="empresa" name="empresa">
+                <small class="error-texto"></small>
             </div>
 
             <div class="grupo-input">
                 <label for="cargo">Cargo que desempeña *</label>
-                <input type="text" id="cargo" name="cargo" required>
+                <input type="text" id="cargo" name="cargo">
+                <small class="error-texto"></small>
             </div>
 
             <div class="grupo-input">
                 <label for="comprobante">Comprobante de pago *</label>
-                <input type="file" id="comprobante" name="comprobante" accept=".pdf, .jpg, .jpeg" required>
+                <input type="file" id="comprobante" name="comprobante" accept=".pdf, .jpg, .jpeg">
                 <small>Solo se admiten archivos en formato PDF o JPG.</small>
+                <small class="error-texto"></small>
             </div>
 
             <!-- Este es el ÚNICO botón de inscripción que debe existir -->

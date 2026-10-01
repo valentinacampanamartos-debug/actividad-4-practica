@@ -121,3 +121,12 @@ input[type="file"].input-error {
     background-color: #ffe6e6 !important;
     outline: none;
 }
+
+/* Estilo para los mensajes de error debajo de cada input */
+.mensaje-error {
+    color: #dc3545;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+    font-weight: 600;
+}

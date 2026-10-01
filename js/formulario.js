@@ -49,55 +49,72 @@
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formInscripcion');
 
+    // Función auxiliar para mostrar mensaje de error en un campo específico
+    function mostrarError(input, mensaje) {
+        input.classList.add('input-error');
+        
+        // Busca el contenedor de error dentro del mismo grupo-input
+        const grupo = input.closest('.grupo-input');
+        const errorSmall = grupo.querySelector('.error-texto');
+        if (errorSmall) {
+            errorSmall.textContent = mensaje;
+            errorSmall.classList.add('mensaje-error');
+        }
+    }
+
+    // Función auxiliar para limpiar todos los errores de la pantalla
+    function limpiarErrores() {
+        form.querySelectorAll('input').forEach(input => {
+            input.classList.remove('input-error');
+        });
+        form.querySelectorAll('.error-texto').forEach(small => {
+            small.textContent = '';
+            small.classList.remove('mensaje-error');
+        });
+    }
+
     form.addEventListener('submit', async (event) => {
         event.preventDefault(); 
-
-        const todosLosInputs = form.querySelectorAll('input');
-        
-        // 1. Limpiamos marcas de error anteriores
-        todosLosInputs.forEach(input => input.classList.remove('input-error'));
+        limpiarErrores();
 
         let hayError = false;
 
-        // 2. Validar que no haya campos vacíos (incluyendo el archivo)
-        todosLosInputs.forEach(input => {
+        // 1. Validar campos vacíos
+        form.querySelectorAll('input').forEach(input => {
             if (!input.value.trim()) {
-                input.classList.add('input-error');
+                mostrarError(input, 'Este campo es obligatorio.');
                 hayError = true;
             }
         });
 
-        // 3. Validar Documento (exactamente 8 dígitos)
+        // 2. Validaciones de formato específico solo si el campo no está vacío
         const inputDocumento = document.getElementById('documento');
         const regexDocumento = /^\d{8}$/;
         if (inputDocumento.value && !regexDocumento.test(inputDocumento.value)) {
-            inputDocumento.classList.add('input-error');
+            mostrarError(inputDocumento, 'El documento debe tener exactamente 8 números.');
             hayError = true;
         }
 
-        // 4. Validar Email
         const inputEmail = document.getElementById('email');
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (inputEmail.value && !regexEmail.test(inputEmail.value)) {
-            inputEmail.classList.add('input-error');
+            mostrarError(inputEmail, 'Ingresa un correo electrónico válido (ej: nombre@dominio.com).');
             hayError = true;
         }
 
-        // 5. Validar Celular (entre 9 y 10 dígitos)
         const inputCelular = document.getElementById('celular');
         const regexCelular = /^\d{9,10}$/;
         if (inputCelular.value && !regexCelular.test(inputCelular.value)) {
-            inputCelular.classList.add('input-error');
+            mostrarError(inputCelular, 'El celular debe tener entre 9 y 10 dígitos.');
             hayError = true;
         }
 
-        // Si se detectó CUALQUIER error, mostramos la alerta y frenamos
+        // Si se detectó algún error, se detiene el proceso de envío
         if (hayError) {
-            alert('Por favor, revisa los campos marcados en rojo.');
             return;
         }
 
-        // --- SI TODO ESTÁ CORRECTO, GUARDA EN LOCALSTORAGE PARA EL ADMIN ---
+        // Guardado local si todo es correcto
         const nuevoInscripto = {
             id: Date.now(),
             apellido: document.getElementById('apellido').value,
@@ -117,13 +134,19 @@ document.addEventListener('DOMContentLoaded', () => {
         form.reset();
     });
 
-    // Quita el borde rojo en tiempo real cuando el usuario empieza a corregir
+    // Limpia el mensaje y el borde rojo dinámicamente apenas el usuario empieza a corregir
     form.querySelectorAll('input').forEach(input => {
-        input.addEventListener('input', () => {
+        const limpiarCampo = () => {
             input.classList.remove('input-error');
-        });
-        input.addEventListener('change', () => { // Para el input de tipo file
-            input.classList.remove('input-error');
-        });
+            const grupo = input.closest('.grupo-input');
+            const errorSmall = grupo.querySelector('.error-texto');
+            if (errorSmall) {
+                errorSmall.textContent = '';
+                errorSmall.classList.remove('mensaje-error');
+            }
+        };
+
+        input.addEventListener('input', limpiarCampo);
+        input.addEventListener('change', limpiarCampo);
     });
 });
