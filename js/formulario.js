@@ -52,73 +52,77 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (event) => {
         event.preventDefault(); 
 
-        // 1. Limpiamos cualquier borde rojo de un intento anterior
         const todosLosInputs = form.querySelectorAll('input');
+        
+        // 1. Limpiamos marcas de error anteriores
         todosLosInputs.forEach(input => input.classList.remove('input-error'));
 
-        let hayErroresVacios = false;
+        let hayError = false;
 
-        // 2. Validamos que ningún campo obligatorio esté vacío
+        // 2. Validar que no haya campos vacíos (incluyendo el archivo)
         todosLosInputs.forEach(input => {
-            if (!input.value) {
-                input.classList.add('input-error'); // Pinta de rojo
-                hayErroresVacios = true;
+            if (!input.value.trim()) {
+                input.classList.add('input-error');
+                hayError = true;
             }
         });
 
-        if (hayErroresVacios) {
-            alert('Por favor, completa todos los campos obligatorios marcados en rojo.');
-            return; // Frena el envío
-        }
-
-        // 3. Validación específica del Documento (8 dígitos)
+        // 3. Validar Documento (exactamente 8 dígitos)
         const inputDocumento = document.getElementById('documento');
         const regexDocumento = /^\d{8}$/;
-        if (!regexDocumento.test(inputDocumento.value)) {
-            inputDocumento.classList.add('input-error'); // Pinta de rojo solo este
-            alert('Error: El documento debe tener exactamente 8 números.');
-            return; 
+        if (inputDocumento.value && !regexDocumento.test(inputDocumento.value)) {
+            inputDocumento.classList.add('input-error');
+            hayError = true;
         }
 
-        // 4. Validación específica del Email
+        // 4. Validar Email
         const inputEmail = document.getElementById('email');
         const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!regexEmail.test(inputEmail.value)) {
-            inputEmail.classList.add('input-error'); // Pinta de rojo solo este
-            alert('Error: Por favor, ingresa un correo electrónico válido.');
-            return;
+        if (inputEmail.value && !regexEmail.test(inputEmail.value)) {
+            inputEmail.classList.add('input-error');
+            hayError = true;
         }
+
+        // 5. Validar Celular (entre 9 y 10 dígitos)
         const inputCelular = document.getElementById('celular');
         const regexCelular = /^\d{9,10}$/;
-        if (!regexCelular.test(inputCelular.value)) {
+        if (inputCelular.value && !regexCelular.test(inputCelular.value)) {
             inputCelular.classList.add('input-error');
-            alert('Error: El número de celular debe tener entre 9 y 10 dígitos (sin espacios ni guiones).');
+            hayError = true;
+        }
+
+        // Si se detectó CUALQUIER error, mostramos la alerta y frenamos
+        if (hayError) {
+            alert('Por favor, revisa los campos marcados en rojo.');
             return;
         }
-        // Si pasa todas las pruebas, empaquetamos y enviamos
-        const formData = new FormData(form);
 
-        try {
-            const response = await fetch('/inscribir', {
-                method: 'POST',
-                body: formData 
-            });
+        // --- SI TODO ESTÁ CORRECTO, GUARDA EN LOCALSTORAGE PARA EL ADMIN ---
+        const nuevoInscripto = {
+            id: Date.now(),
+            apellido: document.getElementById('apellido').value,
+            nombre: document.getElementById('nombre').value,
+            documento: inputDocumento.value,
+            email: inputEmail.value,
+            celular: inputCelular.value,
+            empresa: document.getElementById('empresa').value,
+            cargo: document.getElementById('cargo').value
+        };
 
-            if (response.ok) {
-                alert('¡Inscripción enviada con éxito!');
-                form.reset(); 
-            } else {
-                alert('Hubo un error en el servidor al procesar la inscripción.');
-            }
-        } catch (error) {
-            console.error('Error al enviar:', error);
-            alert('Error de conexión. Verifica que el servidor backend esté corriendo.');
-        }
+        let listaInscriptos = JSON.parse(localStorage.getItem('inscriptosLocales')) || [];
+        listaInscriptos.push(nuevoInscripto);
+        localStorage.setItem('inscriptosLocales', JSON.stringify(listaInscriptos));
+
+        alert('¡Inscripción realizada con éxito!');
+        form.reset();
     });
 
-    // 5. Extra (Opcional pero recomendado): Quitar el rojo apenas el usuario empiece a escribir
-    todosLosInputs.forEach(input => {
+    // Quita el borde rojo en tiempo real cuando el usuario empieza a corregir
+    form.querySelectorAll('input').forEach(input => {
         input.addEventListener('input', () => {
+            input.classList.remove('input-error');
+        });
+        input.addEventListener('change', () => { // Para el input de tipo file
             input.classList.remove('input-error');
         });
     });
