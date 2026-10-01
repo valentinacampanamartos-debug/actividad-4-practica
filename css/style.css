@@ -111,8 +111,13 @@ button:hover {
     background-color: #5a6268;
 }
 
-/* Estilo dinámico para los campos con errores de validación */
-.input-error {
+/* Fuerza el borde rojo y el fondo claro para cualquier input con error */
+input.input-error,
+input[type="text"].input-error,
+input[type="number"].input-error,
+input[type="email"].input-error,
+input[type="file"].input-error {
     border: 2px solid #dc3545 !important;
     background-color: #ffe6e6 !important;
+    outline: none;
 }
