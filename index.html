@@ -52,16 +52,14 @@
                 <input type="text" id="cargo" name="cargo" required>
             </div>
 
-            <div class="grupo-input">
+            <<div class="grupo-input">
                 <label for="comprobante">Comprobante de pago *</label>
-                <!-- El atributo accept restringe la subida solo a pdf y jpg[cite: 1] -->
                 <input type="file" id="comprobante" name="comprobante" accept=".pdf, .jpg, .jpeg" required>
                 <small>Solo se admiten archivos en formato PDF o JPG.</small>
             </div>
 
+            <!-- Este es el ÚNICO botón de inscripción que debe existir -->
             <button type="submit" id="btnInscribir">Inscribirme</button>
-        </form>
-        <button type="submit" id="btnInscribir">Inscribirme</button>
         </form>
 
         <!-- Botón para ir al panel de administrador -->
@@ -70,7 +68,6 @@
         </div>
     </main>
 
-    <!-- Aquí conectamos el archivo JS donde tu compañero programará la lógica -->
     <script src="js/formulario.js"></script>
 </body>
 </html>
