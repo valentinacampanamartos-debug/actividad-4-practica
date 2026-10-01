@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscripción al Evento</title>
+    <!-- Aquí conectamos el archivo CSS que le dará color y forma -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <main class="contenedor-formulario">
+        <h2>Formulario de Inscripción</h2>
+        <p class="instrucciones">Por favor, complete todos los campos obligatorios para registrarse en el evento.</p>
+
+        <!-- El id="formInscripcion" es crucial para que tu compañero de JavaScript capture los datos -->
+        <form id="formInscripcion">
+            
+            <div class="grupo-input">
+                <label for="apellido">Apellido *</label>
+                <!-- Todos los campos llevan 'required' porque los datos son obligatorios[cite: 1] -->
+                <input type="text" id="apellido" name="apellido" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="nombre">Nombre *</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="documento">Documento (8 dígitos) *</label>
+                <input type="number" id="documento" name="documento" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="email">Email *</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="celular">Celular *</label>
+                <input type="number" id="celular" name="celular" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="empresa">Empresa a la que representa *</label>
+                <input type="text" id="empresa" name="empresa" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="cargo">Cargo que desempeña *</label>
+                <input type="text" id="cargo" name="cargo" required>
+            </div>
+
+            <div class="grupo-input">
+                <label for="comprobante">Comprobante de pago *</label>
+                <!-- El atributo accept restringe la subida solo a pdf y jpg[cite: 1] -->
+                <input type="file" id="comprobante" name="comprobante" accept=".pdf, .jpg, .jpeg" required>
+                <small>Solo se admiten archivos en formato PDF o JPG.</small>
+            </div>
+
+            <button type="submit" id="btnInscribir">Inscribirme</button>
+        </form>
+    </main>
+
+    <!-- Aquí conectamos el archivo JS donde tu compañero programará la lógica -->
+    <script src="js/formulario.js"></script>
+</body>
+</html>
