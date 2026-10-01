@@ -40,6 +40,23 @@ document.addEventListener('DOMContentLoaded', () => {
         filtroTexto.addEventListener('input', filtrarTabla);
     }
 
+    const btnTogglePassword = document.getElementById('btnTogglePassword');
+    const inputPassword = document.getElementById('password');
+
+    if (btnTogglePassword && inputPassword) {
+        btnTogglePassword.addEventListener('click', () => {
+            // Cambia el tipo entre 'password' y 'text'
+            const tipoActual = inputPassword.getAttribute('type');
+            if (tipoActual === 'password') {
+                inputPassword.setAttribute('type', 'text');
+                btnTogglePassword.textContent = '🙈'; // Cambia el ícono a ojo tapado o cerrado
+            } else {
+                inputPassword.setAttribute('type', 'password');
+                btnTogglePassword.textContent = '👁️'; // Vuelve al ojo abierto
+            }
+        });
+    }
+
     btnActualizar.addEventListener('click', cargarInscriptos);
     filtroTexto.addEventListener('input', filtrarTabla);
 
