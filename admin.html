@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador</title>
+    <!-- Conectamos los estilos específicos del admin -->
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <!-- Botón para alternar Modo Oscuro / Claro -->
+    <button id="btnModoOscuro" class="btn-theme">🌙 Modo Oscuro</button>
+
+    <!-- SECCIÓN 1: Pantalla de Login -->
+    <main id="loginSection" class="contenedor">
+        <h2>Acceso Administrativo</h2>
+        <form id="formLogin">
+            <div class="grupo-input">
+                <label for="usuario">Usuario (Nombre del grupo)</label>
+                <input type="text" id="usuario" required>
+            </div>
+            <div class="grupo-input">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" required>
+            </div>
+            <button type="submit">Ingresar</button>
+        </form>
+        <p id="errorLogin" class="error-msg"></p>
+    </main>
+
+    <!-- SECCIÓN 2: Panel de Gestión (Oculto inicialmente con style="display: none;") -->
+    <main id="adminSection" class="contenedor panel-admin" style="display: none;">
+        <h2>Gestión de Inscriptos</h2>
+        
+        <!-- Barra superior del panel con filtros y actualización -->
+        <div class="filtros">
+            <input type="text" id="filtroTexto" placeholder="Buscar por apellido, nombre, documento o email...">
+            <button id="btnActualizarLista">🔄 Actualizar Lista</button>
+        </div>
+
+        <div class="info-tabla">
+            <p>Total de inscriptos: <strong id="totalInscriptos">0</strong></p>
+        </div>
+
+        <!-- Tabla dinámica -->
+        <div class="tabla-contenedor">
+            <table id="tablaInscriptos">
+                <thead>
+                    <tr>
+                        <th>Apellido y Nombre</th>
+                        <th>Documento</th>
+                        <th>Email</th>
+                        <th>Celular</th>
+                        <th>Empresa / Cargo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoTabla">
+                    <!-- JavaScript inyectará las filas (<tr>) aquí adentro -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Conectamos la lógica JS del admin -->
+    <script src="js/admin.js"></script>
+</body>
+</html>
