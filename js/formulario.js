@@ -88,7 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('Error: Por favor, ingresa un correo electrónico válido.');
             return;
         }
-
+        const inputCelular = document.getElementById('celular');
+        const regexCelular = /^\d{9,10}$/;
+        if (!regexCelular.test(inputCelular.value)) {
+            inputCelular.classList.add('input-error');
+            alert('Error: El número de celular debe tener entre 9 y 10 dígitos (sin espacios ni guiones).');
+            return;
+        }
         // Si pasa todas las pruebas, empaquetamos y enviamos
         const formData = new FormData(form);
 
