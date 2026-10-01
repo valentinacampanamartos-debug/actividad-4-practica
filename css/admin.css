@@ -193,3 +193,12 @@ th {
 .btn-volver:hover {
     background-color: var(--bg-color);
 }
+
+/* Asegura que la barra de búsqueda sea interactiva */
+.filtros input[type="text"] {
+    background-color: var(--container-bg) !important;
+    color: var(--text-color) !important;
+    cursor: text !important;
+    pointer-events: auto !important;
+    opacity: 1 !important;
+}

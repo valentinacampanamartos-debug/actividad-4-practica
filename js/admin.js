@@ -33,8 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 3. GESTIÓN DE LA TABLA Y FILTROS ---
     const btnActualizar = document.getElementById('btnActualizarLista');
-    const filtroTexto = document.getElementById('filtroTexto');
+    // const filtroTexto = document.getElementById('filtroTexto');
     
+    const filtroTexto = document.getElementById('filtroTexto');
+    if (filtroTexto) {
+        filtroTexto.addEventListener('input', filtrarTabla);
+    }
+
     btnActualizar.addEventListener('click', cargarInscriptos);
     filtroTexto.addEventListener('input', filtrarTabla);
 
@@ -87,15 +92,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // function filtrarTabla() {
+    //     const textoBusqueda = filtroTexto.value.toLowerCase();
+    //     // Filtra buscando coincidencias en apellido, nombre, documento o email
+    //     const filtrados = inscriptosData.filter(p => 
+    //         p.apellido.toLowerCase().includes(textoBusqueda) ||
+    //         p.nombre.toLowerCase().includes(textoBusqueda) ||
+    //         p.documento.includes(textoBusqueda) ||
+    //         p.email.toLowerCase().includes(textoBusqueda)
+    //     );
+    //     renderizarTabla(filtrados);
+    // }
+    // Evento de búsqueda en tiempo real
+    
+
     function filtrarTabla() {
-        const textoBusqueda = filtroTexto.value.toLowerCase();
-        // Filtra buscando coincidencias en apellido, nombre, documento o email
-        const filtrados = inscriptosData.filter(p => 
-            p.apellido.toLowerCase().includes(textoBusqueda) ||
-            p.nombre.toLowerCase().includes(textoBusqueda) ||
-            p.documento.includes(textoBusqueda) ||
-            p.email.toLowerCase().includes(textoBusqueda)
-        );
+        const textoBusqueda = filtroTexto.value.toLowerCase().trim();
+
+        // Filtra por apellido, nombre, documento o email
+        const filtrados = inscriptosData.filter(persona => {
+            const apellido = (persona.apellido || '').toLowerCase();
+            const nombre = (persona.nombre || '').toLowerCase();
+            const documento = (persona.documento || '').toString();
+            const email = (persona.email || '').toLowerCase();
+
+            return apellido.includes(textoBusqueda) ||
+                   nombre.includes(textoBusqueda) ||
+                   documento.includes(textoBusqueda) ||
+                   email.includes(textoBusqueda);
+        });
+
         renderizarTabla(filtrados);
     }
 
